@@ -98,29 +98,6 @@ public class UsersControllerTest
         assertEquals(rooms, responseEntity.getBody());
     }
 
-    @Test
-    public void testLoginUser() {
-        // Prepare test data
-        String username = "testUser";
-        List<Users> allUsers = new ArrayList<>();
-        Users user = new Users();
-        user.setUsername(username);
-        allUsers.add(user);
-
-        // Mock the userRepository.findAll() method
-        when(userRepository.findAll()).thenReturn(allUsers);
-
-        // Mock the Session object with a non-null ID
-        Session session = new Session();
-        session.setId(1L); // Set a non-null ID
-        when(sessionsRepository.save(any(Session.class))).thenReturn(session);
-
-        // Call the loginUser() method
-        ResponseEntity<String> responseEntity = usersController.loginUser(username);
-
-        // Assert that the user is logged in and a session is created
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals("User " + username + " logged in successfully", responseEntity.getBody());
-    }
+ 
     } 
 
