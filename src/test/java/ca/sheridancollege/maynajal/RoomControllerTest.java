@@ -52,7 +52,7 @@ public class RoomControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$[0].name").value("Room 1"))
-                .andExpect(jsonPath("$[1].name").value("My New Room"));
+                .andExpect(jsonPath("$[1].name").value("Room 2"));
     }
 
     @Test
