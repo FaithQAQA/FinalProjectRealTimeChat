@@ -51,7 +51,7 @@ public class RoomControllerTest {
         mockMvc.perform(get("/api/rooms/all"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$[0].name").value("My New Room"))
+                .andExpect(jsonPath("$[0].name").value("Room 1"))
                 .andExpect(jsonPath("$[1].name").value("My New Room"));
     }
 
