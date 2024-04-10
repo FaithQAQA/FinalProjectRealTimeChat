@@ -43,17 +43,12 @@ public class UsersControllerTest
 
     @Test
     public void testGetAllUsers() {
-             // Create a list of users for testing
         List<Users> usersList = new ArrayList<>();
-        // Add some sample users to the list
 
-        // Mock the userRepository.findAll() method to return the list of users
         when(userRepository.findAll()).thenReturn(usersList);
 
-        // Call the getUsers() method
         List<Users> result = usersController.getAllUsers();
 
-        // Assert that the returned list is equal to the list we provided
         assertEquals(usersList, result);
     }
 
@@ -65,35 +60,26 @@ public class UsersControllerTest
         Users user = new Users();
         session.setUser(user);
 
-        // Mock the sessionRepository.findById() method
         when(sessionsRepository.findById(sessionId)).thenReturn(Optional.of(session));
 
-        // Call the getUserBySessionId() method
         ResponseEntity<Users> responseEntity = usersController.getUserBySessionId(sessionId);
 
-        // Assert that the response is OK and contains the correct user
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(user, responseEntity.getBody());
     }
 
     @Test
     public void testGetRoomsForCurrentUser() {
-        // Prepare test data
         Long sessionId = 1L;
         Users user = new Users();
         user.setId(1L);
         List<Room> rooms = new ArrayList<>();
-        // Add some sample rooms to the list
 
-        // Mock the userRepository.findBySessions_Id() method
         when(userRepository.findBySessions_Id(sessionId)).thenReturn(user);
-        // Mock the roomRepository.findByUsersContaining() method
         when(roomRepository.findByUsersContaining(user)).thenReturn(rooms);
 
-        // Call the getRoomsForCurrentUser() method
         ResponseEntity<List<Room>> responseEntity = usersController.getRoomsForCurrentUser(sessionId);
 
-        // Assert that the response is OK and contains the correct rooms
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(rooms, responseEntity.getBody());
     }

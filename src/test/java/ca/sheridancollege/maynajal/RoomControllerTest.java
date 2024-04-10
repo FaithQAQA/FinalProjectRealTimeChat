@@ -41,7 +41,6 @@ public class RoomControllerTest {
 
     @Test
     public void testGetAllRooms() throws Exception {
-        // Given
         Room room1 = new Room();
         room1.setName("Room 1");
         Room room2 = new Room();
@@ -49,7 +48,6 @@ public class RoomControllerTest {
         List<Room> rooms = Arrays.asList(room1, room2);
         roomRepository.saveAll(rooms);
 
-        // When & Then
         mockMvc.perform(get("/api/rooms/all"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
@@ -59,11 +57,9 @@ public class RoomControllerTest {
 
     @Test
     public void testCreateRoom() throws Exception {
-        // Given
         Room room = new Room();
         room.setName("New Room");
 
-        // When & Then
         mockMvc.perform(post("/api/rooms")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\"New Room\"}"))

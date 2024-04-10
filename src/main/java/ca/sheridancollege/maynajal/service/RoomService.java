@@ -32,9 +32,7 @@ public class RoomService {
 
 	    @Transactional
 	    public Room addUserToRoom(Long roomId, Long userId1, Long userId2) {
-	        // Retrieve session ID if needed, it's not used in this method
 	        
-	        // Check if both users exist and session is valid
 	        Users user1 = usersRepository.findById(userId1)
 	                .orElseThrow(() -> new IllegalArgumentException("User 1 not found"));
 	        
@@ -42,15 +40,12 @@ public class RoomService {
 	                .orElseThrow(() -> new IllegalArgumentException("User 2 not found"));
 
 	        System.out.println(user2+ "testing user2 if its being found in the database");
-	        // Retrieve the room
 	        Room room = roomRepository.findById(roomId)
 	                .orElseThrow(() -> new IllegalArgumentException("Room not found"));
 
-	        // Add both users to the room
 	        room.getUsers().add(user1);
 	        room.getUsers().add(user2);
 
-	        // Save the updated room
 	        return roomRepository.save(room);
 	    }
 

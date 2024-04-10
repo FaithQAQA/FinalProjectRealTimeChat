@@ -47,18 +47,15 @@ public class MessagesController
 	  	  @PostMapping("/create")
 	      public ResponseEntity<Message> createMessage(@RequestBody CreateMessageRequest request) {
 	          try {
-	              // Retrieve sender and recipient from repository
 	              Users sender = usersRepository.findById(request.getSenderId())
 	                      .orElseThrow(() -> new IllegalArgumentException("Sender not found"));
 
 	              Users recipient = usersRepository.findById(request.getRecipientId())
 	                      .orElseThrow(() -> new IllegalArgumentException("Recipient not found"));
 
-	              // Retrieve room from repository based on the provided room ID
 	              Room room = roomRepository.findById(request.getRoomId())
 	                      .orElseThrow(() -> new IllegalArgumentException("Room not found"));
 
-	              // Create a new message with provided content, sender, recipient, and room
 	              Message message = new Message();
 	              message.setContent(request.getContent());
 	              message.setSender(sender);
@@ -77,15 +74,13 @@ public class MessagesController
 	                  return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	              }
 
-	              // Send the message to a Kafka topic
 	              kafkaTemplate.send("chat_topic", messageJson);
 	              sendMessage("chat_topic",messageJson);
 
 	              
 	              return new ResponseEntity<>(savedMessage, HttpStatus.CREATED);
 	          } catch (Exception e) {
-	              // Log the exception and return a more informative error message
-	              //log.error("Error creating message", e);
+	        
 	              return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	          }
 	          

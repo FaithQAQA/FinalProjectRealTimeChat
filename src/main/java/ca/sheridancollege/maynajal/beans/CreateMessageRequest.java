@@ -8,7 +8,6 @@ public class CreateMessageRequest
 	    
 	    
 
-	    // Getters and setters
 	    public String getContent() {
 	        return content;
 	    }
@@ -36,12 +35,10 @@ public class CreateMessageRequest
 	    
 	    private Long roomId;
 
-	    // Getter method for roomId
 	    public Long getRoomId() {
 	        return roomId;
 	    }
 
-	    // Setter method for roomId
 	    public void setRoomId(Long roomId) {
 	        this.roomId = roomId;
 	    }

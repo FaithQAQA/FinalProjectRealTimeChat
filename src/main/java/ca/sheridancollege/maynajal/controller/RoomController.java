@@ -49,21 +49,17 @@ public class RoomController {
 
 		 @GetMapping("/refresh")
 		    public List<Room> refreshRooms(@RequestHeader("Authorization") String sessionId) {
-		        // Convert the session ID from String to Long
 			 System.out.println(sessionId+ " String version");
 		        Long sessionIdLong = Long.parseLong(sessionId);
 
 				 System.out.println(sessionIdLong+ " Long  version");
 
-		        // Retrieve the user associated with the session ID
 		        Optional<Session> sessionOptional = sessionRepository.findById(sessionIdLong);
 		        if (sessionOptional.isPresent()) {
 		            Users loggedInUser = sessionOptional.get().getUser();
 
-		            // Get all rooms
 		            List<Room> allRooms = roomRepository.findAll();
 
-		            // Filter rooms based on whether the logged-in user is a part of each room
 		            return allRooms.stream()
 		                    .filter(room -> room.getUsers().contains(loggedInUser))
 		                    .collect(Collectors.toList());

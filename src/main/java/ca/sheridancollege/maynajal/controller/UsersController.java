@@ -25,7 +25,6 @@ import ca.sheridancollege.maynajal.beans.Users;
 import ca.sheridancollege.maynajal.repository.RoomRepository;
 import ca.sheridancollege.maynajal.repository.SessionsRepository;
 import ca.sheridancollege.maynajal.repository.UserRepository;
-import ca.sheridancollege.services.UsersService;
 
 @RestController
 @RequestMapping("/api/users")
@@ -62,12 +61,9 @@ public class UsersController {
 
 	 	  @GetMapping("/api/user/rooms/test")
 	 	    public ResponseEntity<List<Room>> getRoomsForCurrentUser(@RequestParam Long sessionId) {
-	 	        // Retrieve the user based on the session ID
 	 	        Users user = usersRepository.findBySessions_Id(sessionId);
 
-	 	        // Check if the user is found
 	 	        if (user != null) {
-	 	            // Retrieve the rooms for the user
 	 	            List<Room> userRooms = roomRepository.findByUsersContaining(user);
 	 	            return ResponseEntity.ok(userRooms);
 	 	        } else {
@@ -83,14 +79,12 @@ public class UsersController {
 	 	            user.setLoggedIn(true);
 	 	            usersRepository.save(user);
 
-	 	            // Create a new session
 	 	            Session session = new Session();
-	 	            session.setUser(user); // Assuming you've adjusted the Session entity
-	 	            session.setExpirationTime(LocalDateTime.now().plusHours(1)); // Set session expiration
+	 	            session.setUser(user); 
+	 	            session.setExpirationTime(LocalDateTime.now().plusHours(1));
 	 	            sessionRepository.save(session);
 
-	 	            // Include the session ID in the response
-	 	            String sessionId = session.getId().toString(); // Assuming getId() returns the session ID
+	 	            String sessionId = session.getId().toString(); 
 	 	            return ResponseEntity.ok().body("{\"message\": \"User " + username + " logged in successfully\", \"sessionId\": \"" + sessionId + "\"}");
 	 	        }
 	 	    }
@@ -116,7 +110,7 @@ public class UsersController {
 	                 return user.getId();
 	             }
 	         }
-	         return null; // Return null if no user is found with the given username
+	         return null; 
 	     }
 	   
 	    @PostMapping(consumes = "application/json")
@@ -125,7 +119,6 @@ public class UsersController {
 	            Users savedStudent = usersRepository.save(student);
 	            return ResponseEntity.ok(savedStudent);
 	        } catch (DataIntegrityViolationException e) {
-	            // Handle the integrity constraint violation exception
 	            String errorMessage = "Username With " +student.getUsername() + " Exist please pick another name";
 	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
 	        }

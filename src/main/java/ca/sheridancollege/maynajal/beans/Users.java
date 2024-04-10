@@ -26,7 +26,7 @@ public class Users {
 	    private Long id;
 	    private String username;
 	    private String password;
-	    private Boolean loggedIn = false; // Corrected field name to "loggedIn"	
+	    private Boolean loggedIn = false; 	
 	    private String ImgUrl ="https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg";
 	    private String bio;
 	   

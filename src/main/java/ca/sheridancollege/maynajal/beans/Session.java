@@ -19,7 +19,7 @@ import lombok.ToString;
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
-@ToString(exclude = "user") // Exclude user field to avoid circular reference
+@ToString(exclude = "user") 
 public class Session {
 
 	  	@Id
