@@ -4,7 +4,6 @@ package ca.sheridancollege.maynajal.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,8 +37,7 @@ public class MessagesController
 	  	 @Autowired
 	     private UserRepository usersRepository;
 	  	 
-	  	@Autowired
-	  	private KafkaTemplate<String, String> kafkaTemplate;
+
 
 	 
 	
@@ -66,16 +64,8 @@ public class MessagesController
 
 	              Message savedMessage = messageRepository.save(message);
 
-	              ObjectMapper objectMapper = new ObjectMapper();
-	              String messageJson;
-	              try {
-	                  messageJson = objectMapper.writeValueAsString(savedMessage);
-	              } catch (JsonProcessingException e) {
-	                  return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-	              }
+	          
 
-	              kafkaTemplate.send("chat_topic", messageJson);
-	              sendMessage("chat_topic",messageJson);
 
 	              
 	              return new ResponseEntity<>(savedMessage, HttpStatus.CREATED);
@@ -88,7 +78,5 @@ public class MessagesController
 	      
 	  	}
 
-	  	public void sendMessage(String topic, String message) {
-	  	    kafkaTemplate.send(topic, message);
-	  	}
+	  
 }
